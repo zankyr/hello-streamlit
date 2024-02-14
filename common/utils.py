@@ -1,3 +1,5 @@
+import hmac
+
 import pandas as pd
 import streamlit as st
 from common.constants import DATA_CATALOG_PATH, DATA_CATALOG_CONFIGS_PATH
@@ -59,3 +61,23 @@ def show_data_catalog_info():
             st.write("Last process date: ", data_catalog_df_configs['generation_date'].iloc[0])
             st.write("Start date: ", data_catalog_df_configs['start_date'].iloc[0])
             st.write("end date: ", data_catalog_df_configs['end_date'].iloc[0])
+
+
+def check_password():
+    def password_entered():
+        if hmac.compare_digest(st.session_state["password"], st.secrets["password"]):
+            st.session_state["password_correct"] = True
+            del st.session_state["password"]
+        else:
+            st.session_state["password_correct"] = False
+
+    if st.session_state.get("password_correct", False):
+        return True
+
+    st.text_input(
+        "Password", type="password", on_change=password_entered, key="password"
+    )
+
+    if "password_correct" in st.session_state:
+        st.error("😕 Password incorrect")
+    return False

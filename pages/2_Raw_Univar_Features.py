@@ -1,9 +1,14 @@
 import streamlit as st
-
-from common.utils import read_parq
+from common.utils import read_parq, check_password
 
 
 def load_univar_features():
+    st.markdown("# Raw Univar Features")
+    st.sidebar.header("Raw Univar Features")
+    st.write(
+        """Loads the raw univariate features from the database."""
+    )
+
     st.write("## Univariate Common")
     univar_common_placeholder = st.empty()
 
@@ -42,10 +47,8 @@ def load_univar_features():
 
 
 st.set_page_config(page_title="Raw Univar Features", page_icon="📈")
-st.markdown("# Raw Univar Features")
-st.sidebar.header("Raw Univar Features")
-st.write(
-    """Loads the raw univariate features from the database."""
-)
+
+if not check_password():
+    st.stop()
 
 load_univar_features()
