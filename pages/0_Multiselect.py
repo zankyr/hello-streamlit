@@ -30,8 +30,9 @@ st.markdown("# Multiselect example️")
 st.write("This example uses the standard multiselect widget to filter a dataframe.")
 
 st.sidebar.header("Multiselect example️")
-st.sidebar.button("Regenerate data catalogue", type='primary', on_click=regenerate_data, disabled=True,
-                  help="EH! VOLEVI!")
+
 
 run()
 show_data_catalog_info()
+st.sidebar.button("Regenerate data catalogue", type='primary', on_click=regenerate_data, disabled=True,
+                  help="EH! VOLEVI!")

@@ -2,8 +2,9 @@ import hmac
 
 import pandas as pd
 import streamlit as st
-from exception.data_catalogue_exception import DataCatalogueException
 from streamlit.logger import get_logger
+
+from exception.data_catalogue_exception import DataCatalogueException
 
 LOGGER = get_logger(__name__)
 
@@ -59,7 +60,6 @@ def load_data():
     st.session_state["data_catalog"] = data_catalog_df
     data_catalog_df_configs = load_data_catalog_configs()
     st.session_state["data_catalog_configs"] = data_catalog_df_configs
-    st.balloons()
 
 
 def show_data_catalog_info():

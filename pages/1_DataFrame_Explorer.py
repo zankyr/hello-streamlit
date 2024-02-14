@@ -24,8 +24,9 @@ st.markdown("# Dataframe explorer example️")
 st.write("This example uses the dataframe explorer from streamlit_extras to filter a dataframe.")
 
 st.sidebar.header(" Dataframe explorer example️")
-st.sidebar.button("Regenerate data catalogue", type='primary', on_click=regenerate_data, disabled=True,
-                  help="EH! VOLEVI!")
+
 
 run()
 show_data_catalog_info()
+st.sidebar.button("Regenerate data catalogue", type='primary', on_click=regenerate_data, disabled=True,
+                  help="EH! VOLEVI!")
