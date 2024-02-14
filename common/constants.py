@@ -1,7 +1,5 @@
 CLEAN_DATA_BUCKET_NAME = 'etna-clean-data-dev'
-DATA_CATALOG_PATH = 's3://etna-clean-data-dev/FX/spot/features/data-catalog/latest.parq'
-DATA_CATALOG_CONFIGS_PATH = 's3://etna-clean-data-dev/FX/spot/features/data-catalog/configs.parq'
-MAPPING_FEATURES_GROUPS_PATH = 's3://etna-clean-data-dev/FX/spot/features/mapping_features_groups/latest.parq'
+
 
 G10 = ['EURUSD', 'USDJPY', 'GBPUSD', 'AUDUSD', 'NZDUSD', 'USDSEK', 'USDNOK', 'USDCAD', 'USDCHF']
 G10_INVERSE = ['USDEUR', 'USDGBP', 'CADUSD', 'CHFUSD', 'JPYUSD', 'NOKUSD', 'SEKUSD', 'USDAUD', 'USDNZD']
