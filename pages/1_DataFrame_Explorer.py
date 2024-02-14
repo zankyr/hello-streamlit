@@ -13,10 +13,10 @@ def run():
 
         filtered_df = dataframe_explorer(df, False)
 
-        st.dataframe(filtered_df)
+        st.dataframe(filtered_df, use_container_width=True)
 
 
-st.set_page_config(page_title="Dataframe explorer example", page_icon="📈")
+st.set_page_config(page_title="Dataframe explorer example", page_icon="📈", layout="wide")
 if not check_password():
     st.stop()
 

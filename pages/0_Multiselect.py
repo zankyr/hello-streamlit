@@ -19,10 +19,10 @@ def run():
             st.error("Please select at least one product.")
         else:
             data = df.loc[df['PRODUCT'].isin(products)]
-            st.dataframe(data)
+            st.dataframe(data,use_container_width=True)
 
 
-st.set_page_config(page_title="Multiselect example", page_icon="📈")
+st.set_page_config(page_title="Multiselect example", page_icon="📈", layout="wide")
 if not check_password():
     st.stop()
 

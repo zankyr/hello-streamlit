@@ -28,7 +28,7 @@ def load_univar_features():
         st.session_state["raw_univar_features"] = True
 
 
-st.set_page_config(page_title="Raw Univar Features", page_icon="📈")
+st.set_page_config(page_title="Raw Univar Features", page_icon="📈", layout="wide")
 
 if not check_password():
     st.stop()
@@ -45,18 +45,18 @@ st.write(
 
 st.write("## Univariate Common")
 if 'univar_common_df' in st.session_state:
-    st.dataframe(st.session_state["univar_common_df"])
+    st.dataframe(st.session_state["univar_common_df"],use_container_width=True)
 
 st.write("## Univariate 1m")
 if 'univar_1m_df' in st.session_state:
-    st.dataframe(st.session_state["univar_1m_df"])
+    st.dataframe(st.session_state["univar_1m_df"],use_container_width=True)
 
 st.write("## Univariate 1h")
 if 'univar_1h_df' in st.session_state:
-    st.dataframe(st.session_state["univar_1h_df"])
+    st.dataframe(st.session_state["univar_1h_df"],use_container_width=True)
 
 st.write("## Univariate 1d17")
 if 'univar_1d17_df' in st.session_state:
-    st.dataframe(st.session_state["univar_1d17_df"])
+    st.dataframe(st.session_state["univar_1d17_df"],use_container_width=True)
 
 st.sidebar.button("Reload data", on_click=load_univar_features)
