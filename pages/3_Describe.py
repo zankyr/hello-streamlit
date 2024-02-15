@@ -27,4 +27,4 @@ pandas_describe = st.empty()
 st.write("## Statsmodels describe")
 statsmodels_describe = st.empty()
 
-im_just_a_test_not_yet_a_function()
+# im_just_a_test_not_yet_a_function()
