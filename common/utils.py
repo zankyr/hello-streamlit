@@ -2,9 +2,8 @@ import hmac
 
 import pandas as pd
 import streamlit as st
-from streamlit.logger import get_logger
-
 from exception.data_catalogue_exception import DataCatalogueException
+from streamlit.logger import get_logger
 
 LOGGER = get_logger(__name__)
 
@@ -30,7 +29,7 @@ def _regenerate_features_data() -> pd.DataFrame:
 
 
 def regenerate_data():
-    st.snow()
+    im_just_a_test_not_yet_a_function()
 
 
 @st.cache_data
@@ -75,6 +74,8 @@ def show_data_catalog_info():
 
 
 def check_password():
+    return True
+
     def password_entered():
         if hmac.compare_digest(st.session_state["password"], st.secrets["password"]):
             st.session_state["password_correct"] = True

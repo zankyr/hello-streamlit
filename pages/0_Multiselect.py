@@ -19,7 +19,7 @@ def run():
             st.error("Please select at least one product.")
         else:
             data = df.loc[df['PRODUCT'].isin(products)]
-            st.dataframe(data,use_container_width=True)
+            st.dataframe(data, use_container_width=True)
 
 
 st.set_page_config(page_title="Multiselect example", page_icon="📈", layout="wide")
@@ -31,8 +31,6 @@ st.write("This example uses the standard multiselect widget to filter a datafram
 
 st.sidebar.header("Multiselect example️")
 
-
 run()
 show_data_catalog_info()
-st.sidebar.button("Regenerate data catalogue", type='primary', on_click=regenerate_data, disabled=True,
-                  help="EH! VOLEVI!")
+st.sidebar.button("Regenerate data catalogue", type='primary', on_click=regenerate_data)
