@@ -5,6 +5,8 @@ import streamlit as st
 from exception.data_catalogue_exception import DataCatalogueException
 from streamlit.logger import get_logger
 
+from .data_catalog_session_name import DataCatalogSessionName
+
 LOGGER = get_logger(__name__)
 
 
@@ -29,21 +31,35 @@ def _regenerate_features_data() -> pd.DataFrame:
 
 
 def regenerate_data():
-    im_just_a_test_not_yet_a_function()
+    pass
 
 
-@st.cache_data
-def load_data_catalog():
-    LOGGER.info('Reading data catalog...')
-    data_catalog_df_ = read_parq("data-catalogue", "mock/data_catalog.parquet")
 
-    if data_catalog_df_.empty:
-        raise DataCatalogueException("Missing or empty data catalogue.")
+def load_data_catalogs():
+    LOGGER.info('Reading data catalogs...')
 
-    return data_catalog_df_
+    data_catalog_univar_common = read_parq("data-catalogue-univar-common", "mock/data_catalog_univar_common.parquet")
+    if data_catalog_univar_common.empty:
+        raise DataCatalogueException("Missing or empty data catalogue univar common.")
+
+    data_catalog_univar_1m = read_parq("data-catalogue-univar-1m", "mock/data_catalog_univar_1m.parquet")
+    if data_catalog_univar_1m.empty:
+        raise DataCatalogueException("Missing or empty data catalogue univar 1m.")
+
+    data_catalog_univar_1h = read_parq("data-catalogue-univar-1h", "mock/data_catalog_univar_1h.parquet")
+    if data_catalog_univar_1h.empty:
+        raise DataCatalogueException("Missing or empty data catalogue univar 1h.")
+
+    data_catalog_univar_1d17 = read_parq("data-catalogue-univar-1d17", "mock/data_catalog_univar_1d17.parquet")
+    if data_catalog_univar_1d17.empty:
+        raise DataCatalogueException("Missing or empty data catalogue univar 1d17.")
+
+    st.session_state[DataCatalogSessionName.DATA_CATALOG_UNIVAR_COMMON] = data_catalog_univar_common
+    st.session_state[DataCatalogSessionName.DATA_CATALOG_UNIVAR_1M] = data_catalog_univar_1m
+    st.session_state[DataCatalogSessionName.DATA_CATALOG_UNIVAR_1H] = data_catalog_univar_1h
+    st.session_state[DataCatalogSessionName.DATA_CATALOG_UNIVAR_1D17] = data_catalog_univar_1d17
 
 
-@st.cache_data
 def load_data_catalog_configs():
     LOGGER.info('Reading data catalog configs...')
     data_catalog_configs_df_ = read_parq("data-catalogue", "mock/data_catalog_configs.parquet")
@@ -51,21 +67,22 @@ def load_data_catalog_configs():
     if data_catalog_configs_df_.empty:
         raise DataCatalogueException("Missing or empty data catalogue configs.")
 
-    return data_catalog_configs_df_
+    st.session_state[DataCatalogSessionName.DATA_CATALOG_CONFIGS] = data_catalog_configs_df_
 
 
 def load_data():
-    data_catalog_df = load_data_catalog()
-    st.session_state["data_catalog"] = data_catalog_df
-    data_catalog_df_configs = load_data_catalog_configs()
-    st.session_state["data_catalog_configs"] = data_catalog_df_configs
+    LOGGER.warning(st.session_state)
+    if DataCatalogSessionName.SESSION_LOADED not in st.session_state:
+        load_data_catalogs()
+        load_data_catalog_configs()
+        st.session_state[DataCatalogSessionName.SESSION_LOADED] = True
 
 
 def show_data_catalog_info():
-    if "data_catalog_configs" not in st.session_state:
+    if DataCatalogSessionName.DATA_CATALOG_CONFIGS not in st.session_state:
         st.sidebar.error("**🖕 Use the `Regenerate data catalogue** button to generate a new data catalogue.")
     else:
-        data_catalog_df_configs = st.session_state["data_catalog_configs"]
+        data_catalog_df_configs = st.session_state[DataCatalogSessionName.DATA_CATALOG_CONFIGS]
 
         with st.sidebar.container(border=True):
             st.write("Last process date: ", data_catalog_df_configs['generation_date'].iloc[0])
