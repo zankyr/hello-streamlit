@@ -34,30 +34,12 @@ def regenerate_data():
     pass
 
 
-
 def load_data_catalogs():
-    LOGGER.info('Reading data catalogs...')
+    LOGGER.info('Reading data catalog...')
 
-    data_catalog_univar_common = read_parq("data-catalogue-univar-common", "mock/data_catalog_univar_common.parquet")
-    if data_catalog_univar_common.empty:
-        raise DataCatalogueException("Missing or empty data catalogue univar common.")
+    data_catalog_df = read_parq("data-catalogue", "mock/data_catalog.parquet")
 
-    data_catalog_univar_1m = read_parq("data-catalogue-univar-1m", "mock/data_catalog_univar_1m.parquet")
-    if data_catalog_univar_1m.empty:
-        raise DataCatalogueException("Missing or empty data catalogue univar 1m.")
-
-    data_catalog_univar_1h = read_parq("data-catalogue-univar-1h", "mock/data_catalog_univar_1h.parquet")
-    if data_catalog_univar_1h.empty:
-        raise DataCatalogueException("Missing or empty data catalogue univar 1h.")
-
-    data_catalog_univar_1d17 = read_parq("data-catalogue-univar-1d17", "mock/data_catalog_univar_1d17.parquet")
-    if data_catalog_univar_1d17.empty:
-        raise DataCatalogueException("Missing or empty data catalogue univar 1d17.")
-
-    st.session_state[DataCatalogSessionName.DATA_CATALOG_UNIVAR_COMMON] = data_catalog_univar_common
-    st.session_state[DataCatalogSessionName.DATA_CATALOG_UNIVAR_1M] = data_catalog_univar_1m
-    st.session_state[DataCatalogSessionName.DATA_CATALOG_UNIVAR_1H] = data_catalog_univar_1h
-    st.session_state[DataCatalogSessionName.DATA_CATALOG_UNIVAR_1D17] = data_catalog_univar_1d17
+    st.session_state[DataCatalogSessionName.DATA_CATALOG] = data_catalog_df
 
 
 def load_data_catalog_configs():
@@ -71,7 +53,6 @@ def load_data_catalog_configs():
 
 
 def load_data():
-    LOGGER.warning(st.session_state)
     if DataCatalogSessionName.SESSION_LOADED not in st.session_state:
         load_data_catalogs()
         load_data_catalog_configs()

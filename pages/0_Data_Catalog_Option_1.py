@@ -7,62 +7,36 @@ LOGGER = get_logger(__name__)
 
 
 def run():
-    data_catalog_univar_common = st.session_state[DataCatalogSessionName.DATA_CATALOG_UNIVAR_COMMON]
-    data_catalog_univar_1m = st.session_state[DataCatalogSessionName.DATA_CATALOG_UNIVAR_1M]
-    data_catalog_univar_1h = st.session_state[DataCatalogSessionName.DATA_CATALOG_UNIVAR_1H]
-    data_catalog_univar_1d17 = st.session_state[DataCatalogSessionName.DATA_CATALOG_UNIVAR_1D17]
+    data_catalog = st.session_state[DataCatalogSessionName.DATA_CATALOG]
 
-    st.write("## Data Catalog - Univar Common")
-    st.dataframe(data_catalog_univar_common, use_container_width=True)
+    tickers = list(data_catalog['ticker'].unique())
 
-    st.write("## Data Catalog - Univar 1m")
-    tickers_1m = list(data_catalog_univar_1m['ticker'].unique())
-
-    tickers_1m = st.multiselect(
-        key="tickers_1m",
+    tickers = st.multiselect(
+        key="tickers",
         label="Choose ticker(s)",
-        options=tickers_1m,
-        default=tickers_1m
+        options=tickers,
+        default=tickers
     )
 
-    if not tickers_1m:
-        st.error("Please select at least one product.")
-    else:
-        filtered_1m_df = data_catalog_univar_1m.loc[data_catalog_univar_1m['ticker'].isin(tickers_1m)]
-        st.dataframe(filtered_1m_df, use_container_width=True)
-
-    st.write("## Data Catalog - Univar 1h")
-    tickers_1h = list(data_catalog_univar_1h['ticker'].unique())
-
-    tickers_1h = st.multiselect(
-        key="tickers_1h",
-        label="Choose ticker(s)",
-        options=tickers_1h,
-        default=tickers_1h
+    sources = list(data_catalog['source_config'].unique())
+    sources = st.multiselect(
+        key="sources",
+        label="Choose source(es)",
+        options=sources,
+        default=sources
     )
 
-    if not tickers_1h:
-        st.error("Please select at least one product.")
+    if not tickers and not sources:
+        st.error("Please select at least one ticker or source.")
     else:
-        filtered_1h_df = data_catalog_univar_1h.loc[data_catalog_univar_1h['ticker'].isin(tickers_1h)]
-        st.dataframe(filtered_1h_df, use_container_width=True)
-
-    st.write("## Data Catalog - Univar 1d17")
-
-    tickers_1d17 = list(data_catalog_univar_1d17['ticker'].unique())
-
-    tickers_1d17 = st.multiselect(
-        key="tickers_1d17",
-        label="Choose ticker(s)",
-        options=tickers_1d17,
-        default=tickers_1d17
-    )
-
-    if not tickers_1d17:
-        st.error("Please select at least one product.")
-    else:
-        filtered_1d17_df = data_catalog_univar_1d17.loc[data_catalog_univar_1d17['ticker'].isin(tickers_1d17)]
-        st.dataframe(filtered_1d17_df, use_container_width=True)
+        if tickers and sources:
+            filtered_data = data_catalog.loc[data_catalog['ticker'].isin(tickers)
+                                             & data_catalog['source_config'].isin(sources)]
+        elif tickers:
+            filtered_data = data_catalog.loc[data_catalog['ticker'].isin(tickers)]
+        else:
+            filtered_data = data_catalog.loc[data_catalog['source_config'].isin(sources)]
+        st.dataframe(filtered_data, use_container_width=True)
 
 
 st.set_page_config(page_title="Data Catalog - Option 1", page_icon="📈", layout="wide")
