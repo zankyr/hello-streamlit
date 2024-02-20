@@ -16,8 +16,7 @@ def run():
         **👈 Select a demo from the sidebar** to see some examples
         of what the data catalog can do!
         ### Site map
-        - DataFrame explorer: Uses [streamlit-extras](https://arnaudmiribel.github.io/streamlit-extras/extras/dataframe_explorer/) to display the data.
-        - Multiselect: Uses  standard [streamlit](https://streamlit.io/) widgets to display the data.
+        - Data Catalog: Uses [streamlit-extras](https://arnaudmiribel.github.io/streamlit-extras/extras/dataframe_explorer/) to display the data.
         - Raw Univar Features: Displays the univar features raw data from the database.
     """
     )
